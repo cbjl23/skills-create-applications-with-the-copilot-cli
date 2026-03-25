@@ -169,6 +169,10 @@ describe('Calculator', () => {
       expect(calculator.modulo(10, 3)).toBe(1);
     });
 
+    test('should calculate modulo as shown in example: 5 % 2', () => {
+      expect(calculator.modulo(5, 2)).toBe(1);
+    });
+
     test('should handle negative dividend', () => {
       expect(calculator.modulo(-10, 3)).toBe(-1);
     });
@@ -190,11 +194,31 @@ describe('Calculator', () => {
     test('should work with decimal numbers', () => {
       expect(calculator.modulo(7.5, 2)).toBeCloseTo(1.5);
     });
+
+    test('should handle one as divisor', () => {
+      expect(calculator.modulo(15, 1)).toBe(0);
+    });
+
+    test('should handle larger dividend with small divisor', () => {
+      expect(calculator.modulo(100, 7)).toBe(2);
+    });
+
+    test('should handle same numbers', () => {
+      expect(calculator.modulo(42, 42)).toBe(0);
+    });
+
+    test('should handle modulo with divisor greater than dividend', () => {
+      expect(calculator.modulo(3, 10)).toBe(3);
+    });
   });
 
   describe('Power', () => {
     test('should raise positive number to positive exponent', () => {
       expect(calculator.power(2, 8)).toBe(256);
+    });
+
+    test('should calculate power as shown in example: 2 ^ 3', () => {
+      expect(calculator.power(2, 3)).toBe(8);
     });
 
     test('should raise number to zero exponent', () => {
@@ -224,10 +248,38 @@ describe('Calculator', () => {
     test('should handle zero raised to positive power', () => {
       expect(calculator.power(0, 5)).toBe(0);
     });
+
+    test('should handle larger bases', () => {
+      expect(calculator.power(10, 3)).toBe(1000);
+    });
+
+    test('should handle fractional base with integer exponent', () => {
+      expect(calculator.power(0.5, 3)).toBe(0.125);
+    });
+
+    test('should handle negative base with fractional exponent', () => {
+      expect(calculator.power(-4, 0.5)).toBe(NaN);
+    });
+
+    test('should raise negative one to even power', () => {
+      expect(calculator.power(-1, 4)).toBe(1);
+    });
+
+    test('should raise negative one to odd power', () => {
+      expect(calculator.power(-1, 3)).toBe(-1);
+    });
+
+    test('should handle very small exponents', () => {
+      expect(calculator.power(2, 0.001)).toBeCloseTo(1.00069, 4);
+    });
   });
 
   describe('Square Root', () => {
     test('should calculate square root of positive number', () => {
+      expect(calculator.squareRoot(16)).toBe(4);
+    });
+
+    test('should calculate square root as shown in example: √16', () => {
       expect(calculator.squareRoot(16)).toBe(4);
     });
 
@@ -261,6 +313,41 @@ describe('Calculator', () => {
 
     test('should handle large numbers', () => {
       expect(calculator.squareRoot(1000000)).toBe(1000);
+    });
+
+    test('should calculate square root of 4', () => {
+      expect(calculator.squareRoot(4)).toBe(2);
+    });
+
+    test('should calculate square root of 9', () => {
+      expect(calculator.squareRoot(9)).toBe(3);
+    });
+
+    test('should calculate square root of 25', () => {
+      expect(calculator.squareRoot(25)).toBe(5);
+    });
+
+    test('should calculate square root of 100', () => {
+      expect(calculator.squareRoot(100)).toBe(10);
+    });
+
+    test('should calculate square root of very small positive number', () => {
+      expect(calculator.squareRoot(0.0001)).toBe(0.01);
+    });
+
+    test('should calculate square root of pi', () => {
+      expect(calculator.squareRoot(Math.PI)).toBeCloseTo(1.7724, 3);
+    });
+
+    test('should handle perfect square decimals', () => {
+      expect(calculator.squareRoot(6.25)).toBe(2.5);
+    });
+
+    test('should throw error consistently for any negative value', () => {
+      const negativeValues = [-1, -0.1, -100, -999.99];
+      negativeValues.forEach(value => {
+        expect(() => calculator.squareRoot(value)).toThrow('Cannot calculate square root of a negative number');
+      });
     });
   });
 });
