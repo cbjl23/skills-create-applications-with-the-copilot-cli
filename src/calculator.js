@@ -73,8 +73,8 @@ if (require.main === module) {
   const num1 = parseFloat(args[1]);
   const num2 = parseFloat(args[2]);
 
-  if (isNaN(num1) || isNaN(num2)) {
-    console.error('Error: Both arguments must be valid numbers');
+  if (isNaN(num1) || isNaN(num2) || !isFinite(num1) || !isFinite(num2)) {
+    console.error('Error: Both arguments must be valid finite numbers');
     process.exit(1);
   }
 
